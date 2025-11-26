@@ -160,4 +160,73 @@ document.addEventListener('DOMContentLoaded', () => {
         successMsg.classList.remove('hidden');
     }, 3000);
 
+    // Mobile Menu Toggle
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+
+            // Change icon
+            const icon = mobileToggle.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                body.style.overflow = 'auto';
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                body.style.overflow = 'auto';
+            });
+        });
+    }
+
+    // Form Submission Handling
+    const emailForm = document.querySelector('.email-form');
+    if (emailForm) {
+        emailForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const inputGroup = emailForm.querySelector('.input-group');
+            const button = emailForm.querySelector('button');
+            const input = emailForm.querySelector('input');
+
+            // Simulate loading
+            const originalBtnText = button.innerText;
+            button.innerText = 'Sending...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                // Success state
+                inputGroup.classList.add('success');
+                button.classList.add('success');
+                button.innerHTML = '<i class="fas fa-check"></i> Joined';
+                input.value = 'Welcome to Nexus AI!';
+                input.disabled = true;
+
+                // Reset after 5 seconds (optional)
+                // setTimeout(() => {
+                //     inputGroup.classList.remove('success');
+                //     button.classList.remove('success');
+                //     button.innerText = originalBtnText;
+                //     button.disabled = false;
+                //     input.value = '';
+                //     input.disabled = false;
+                // }, 5000);
+            }, 1500);
+        });
+    }
+
 });
